@@ -5,6 +5,7 @@ import skill from './skill'
 import experience from './experience'
 import education from './education'
 import certification from './certification'
+import siteSetting from './siteSetting'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -19,7 +20,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     // blog,
     // service,
     // contact,
-    // siteSettings,
+    siteSetting,
     // navigation,
   ],
 }
