@@ -1,5 +1,16 @@
-import { AsteriskIcon, CaseIcon, CogIcon, DocumentsIcon, InlineIcon, ProjectsIcon, RocketIcon, StarIcon, TagIcon, UserIcon } from '@sanity/icons'
-import type { StructureResolver } from 'sanity/structure'
+import {
+  AsteriskIcon,
+  CaseIcon,
+  CogIcon,
+  DocumentsIcon,
+  InlineIcon,
+  ProjectsIcon,
+  RocketIcon,
+  StarIcon,
+  TagIcon,
+  UserIcon,
+} from "@sanity/icons";
+import type { StructureResolver } from "sanity/structure";
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
@@ -48,25 +59,35 @@ export const structure: StructureResolver = (S) =>
                         .title("Work Experience")
                         .icon(CaseIcon)
                         .schemaType("experience")
-                        .child(S.documentTypeList("experience").title("Work Experience")),
+                        .child(
+                          S.documentTypeList("experience").title(
+                            "Work Experience",
+                          ),
+                        ),
                       S.listItem()
                         .title("Education")
                         .icon(CaseIcon)
                         .schemaType("education")
-                        .child(S.documentTypeList("education").title("Education")),
+                        .child(
+                          S.documentTypeList("education").title("Education"),
+                        ),
                       S.listItem()
                         .title("Certifications")
                         .icon(CaseIcon)
                         .schemaType("certification")
-                        .child(S.documentTypeList("certification").title("Certifications")),
+                        .child(
+                          S.documentTypeList("certification").title(
+                            "Certifications",
+                          ),
+                        ),
                       // S.listItem()
                       //   .title("Achievements & Awards")
                       //   .icon(StarIcon)
                       //   .schemaType("achievement")
                       //   .child(S.documentTypeList("achievement").title("Achievements & Awards")),
-                    ])
-                )
-            ])
+                    ]),
+                ),
+            ]),
         ),
       S.divider(),
       // Content & Community
@@ -109,5 +130,8 @@ export const structure: StructureResolver = (S) =>
         .title("Site Settings")
         .icon(CogIcon)
         .child(
-          S.document().schemaType("siteSetting").documentId("singleton-siteSetting"),),
-    ])
+          S.document()
+            .schemaType("siteSetting")
+            .documentId("singleton-siteSetting"),
+        ),
+    ]);

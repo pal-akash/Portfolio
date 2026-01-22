@@ -1,11 +1,11 @@
-import type { SchemaTypeDefinition } from 'sanity'
-import profile from './profile'
-import project from './project'
-import skill from './skill'
-import experience from './experience'
-import education from './education'
-import certification from './certification'
-import siteSetting from './siteSetting'
+import type { SchemaTypeDefinition } from "sanity";
+import certification from "./certification";
+import education from "./education";
+import experience from "./experience";
+import profile from "./profile";
+import project from "./project";
+import siteSetting from "./siteSetting";
+import skill from "./skill";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -23,4 +23,4 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     siteSetting,
     // navigation,
   ],
-}
+};
