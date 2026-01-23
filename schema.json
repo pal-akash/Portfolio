@@ -1474,6 +1474,14 @@
           "of": [
             {
               "type": "string",
+              "value": "programming-language"
+            },
+            {
+              "type": "string",
+              "value": "framework"
+            },
+            {
+              "type": "string",
               "value": "frontend"
             },
             {
@@ -1482,31 +1490,7 @@
             },
             {
               "type": "string",
-              "value": "ai-ml"
-            },
-            {
-              "type": "string",
-              "value": "devops"
-            },
-            {
-              "type": "string",
               "value": "database"
-            },
-            {
-              "type": "string",
-              "value": "mobile"
-            },
-            {
-              "type": "string",
-              "value": "cloud"
-            },
-            {
-              "type": "string",
-              "value": "testing"
-            },
-            {
-              "type": "string",
-              "value": "design"
             },
             {
               "type": "string",
@@ -1519,51 +1503,24 @@
             {
               "type": "string",
               "value": "other"
+            },
+            {
+              "type": "string",
+              "value": "cloud"
+            },
+            {
+              "type": "string",
+              "value": "testing"
+            },
+            {
+              "type": "string",
+              "value": "design"
             }
           ]
         },
         "optional": true
       },
-      "proficiency": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "union",
-          "of": [
-            {
-              "type": "string",
-              "value": "beginner"
-            },
-            {
-              "type": "string",
-              "value": "intermediate"
-            },
-            {
-              "type": "string",
-              "value": "advanced"
-            },
-            {
-              "type": "string",
-              "value": "expert"
-            }
-          ]
-        },
-        "optional": true
-      },
-      "percentage": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "number"
-        },
-        "optional": true
-      },
-      "yearsOfExperience": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "number"
-        },
-        "optional": true
-      },
-      "color": {
+      "icon": {
         "type": "objectAttribute",
         "value": {
           "type": "string"

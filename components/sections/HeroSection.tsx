@@ -7,6 +7,7 @@ import { LayoutTextFlip } from '../ui/layout-text-flip';
 import { ProfileImage } from '../ProfileImage';
 import { GithubIcon, LinkedinIcon } from '@sanity/icons';
 import { ClockIcon, MailIcon, MapPinIcon } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 
 const HERO_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
   firstName,
@@ -75,7 +76,14 @@ async function HeroSection() {
                       rel="noopener noreferrer"
                       className="rounded-lg border hover:bg-accent transition-colors @md/hero:text-base p-1"
                     >
-                      <GithubIcon fontSize={40} />
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <GithubIcon fontSize={40} />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>GitHub</p>
+                        </TooltipContent>
+                      </Tooltip>
                     </Link>
                   )}
                   {profile.socialLinks.linkedin && (
@@ -85,7 +93,14 @@ async function HeroSection() {
                       rel="noopener noreferrer"
                       className="rounded-lg border hover:bg-accent transition-colors @md/hero:text-base p-1"
                     >
-                      <LinkedinIcon fontSize={40} />
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <LinkedinIcon fontSize={40} />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>LinkedIn</p>
+                        </TooltipContent>
+                      </Tooltip>
                     </Link>
                   )}
                 </div>

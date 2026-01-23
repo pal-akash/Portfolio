@@ -209,11 +209,8 @@ export type Skill = {
   _updatedAt: string;
   _rev: string;
   name?: string;
-  category?: "frontend" | "backend" | "ai-ml" | "devops" | "database" | "mobile" | "cloud" | "testing" | "design" | "tools" | "soft-skills" | "other";
-  proficiency?: "beginner" | "intermediate" | "advanced" | "expert";
-  percentage?: number;
-  yearsOfExperience?: number;
-  color?: string;
+  category?: "programming-language" | "framework" | "frontend" | "backend" | "database" | "tools" | "soft-skills" | "other" | "cloud" | "testing" | "design";
+  icon?: string;
 };
 
 export type Project = {
@@ -433,15 +430,6 @@ export type ABOUT_QUERYResult = {
   firstName: null;
   lastName: null;
   fullBio: null;
-  yearsOfExperience: number | null;
-  stats: null;
-  email: null;
-  phone: null;
-  location: null;
-} | {
-  firstName: null;
-  lastName: null;
-  fullBio: null;
   yearsOfExperience: null;
   stats: null;
   email: null;
@@ -479,6 +467,44 @@ export type ABOUT_QUERYResult = {
   location: string | null;
 } | null;
 
+// Source: ./components/sections/ExperienceSection.tsx
+// Variable: EXPERIENCE_QUERY
+// Query: *[_type == "experience"] | order(startDate desc){    company,    position,    employmentType,    location,    startDate,    endDate,    current,    description,    responsibilities,    achievements,    technologies[]->{name, category},    companyLogo,    }
+export type EXPERIENCE_QUERYResult = Array<{
+  company: string | null;
+  position: string | null;
+  employmentType: "contract" | "freelance" | "full-time" | "internship" | "part-time" | null;
+  location: string | null;
+  startDate: string | null;
+  endDate: string | null;
+  current: boolean | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  responsibilities: Array<string> | null;
+  achievements: Array<string> | null;
+  technologies: Array<{
+    name: string | null;
+    category: "backend" | "cloud" | "database" | "design" | "framework" | "frontend" | "other" | "programming-language" | "soft-skills" | "testing" | "tools" | null;
+  }> | null;
+  companyLogo: string | null;
+}>;
+
 // Source: ./components/sections/HeroSection.tsx
 // Variable: HERO_QUERY
 // Query: *[_id == "singleton-profile"][0]{  firstName,  lastName,  headline,  headlineStaticText,  headlineAnimatedWords,  headlineAnimatedDuration,  shortBio,  email,  isOnline,  phone,  location,  availability,  socialLinks,  yearsOfExperience,  profileImage    }
@@ -497,22 +523,6 @@ export type HERO_QUERYResult = {
   availability: null;
   socialLinks: null;
   yearsOfExperience: null;
-  profileImage: null;
-} | {
-  firstName: null;
-  lastName: null;
-  headline: null;
-  headlineStaticText: null;
-  headlineAnimatedWords: null;
-  headlineAnimatedDuration: null;
-  shortBio: null;
-  email: null;
-  isOnline: null;
-  phone: null;
-  location: null;
-  availability: null;
-  socialLinks: null;
-  yearsOfExperience: number | null;
   profileImage: null;
 } | {
   firstName: null;
@@ -563,11 +573,22 @@ export type HERO_QUERYResult = {
   } | null;
 } | null;
 
+// Source: ./components/sections/SkillsSection.tsx
+// Variable: SKILLS_QUERY
+// Query: *[_type == "skill"] | order(category asc, order asc){    name,    category,    icon,    }
+export type SKILLS_QUERYResult = Array<{
+  name: string | null;
+  category: "backend" | "cloud" | "database" | "design" | "framework" | "frontend" | "other" | "programming-language" | "soft-skills" | "testing" | "tools" | null;
+  icon: string | null;
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_id == \"singleton-profile\"][0]{\n    firstName,\n    lastName,\n    fullBio,\n    yearsOfExperience,\n    stats,\n    email,\n    phone,\n    location,\n        }": ABOUT_QUERYResult;
+    "*[_type == \"experience\"] | order(startDate desc){\n    company,\n    position,\n    employmentType,\n    location,\n    startDate,\n    endDate,\n    current,\n    description,\n    responsibilities,\n    achievements,\n    technologies[]->{name, category},\n    companyLogo,\n    }": EXPERIENCE_QUERYResult;
     "*[_id == \"singleton-profile\"][0]{\n  firstName,\n  lastName,\n  headline,\n  headlineStaticText,\n  headlineAnimatedWords,\n  headlineAnimatedDuration,\n  shortBio,\n  email,\n  isOnline,\n  phone,\n  location,\n  availability,\n  socialLinks,\n  yearsOfExperience,\n  profileImage\n    }": HERO_QUERYResult;
+    "*[_type == \"skill\"] | order(category asc, order asc){\n    name,\n    category,\n    icon,\n    }": SKILLS_QUERYResult;
   }
 }
