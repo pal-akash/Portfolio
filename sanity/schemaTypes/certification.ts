@@ -19,6 +19,16 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "credentialId",
+      title: "Credential ID",
+      type: "string",
+    }),
+    defineField({
+      name: "credentialUrl",
+      title: "Credential URL",
+      type: "url",
+    }),
+    defineField({
       name: "issueDate",
       title: "Issue Date",
       type: "date",
@@ -40,6 +50,14 @@ export default defineType({
         },
       ],
       description: "Description of course works",
+    }),
+    defineField({
+      name: "order",
+      title: "Display Order",
+      type: "number",
+      description: "Lower numbers appear first (0-99)",
+      initialValue: 0,
+      validation: (Rule) => Rule.min(0).max(99),
     }),
     defineField({
       name: "certificate",

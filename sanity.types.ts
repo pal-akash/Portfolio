@@ -138,25 +138,11 @@ export type Education = {
   startDate?: string;
   endDate?: string;
   current?: boolean;
-  description?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
+  description?: string;
   instituteLogo?: string;
+  website?: string;
+  order?: number;
+  achievements?: Array<string>;
 };
 
 export type Experience = {
@@ -467,6 +453,25 @@ export type ABOUT_QUERYResult = {
   location: string | null;
 } | null;
 
+// Source: ./components/sections/EducationSection.tsx
+// Variable: EDUCATION_QUERY
+// Query: *[_type == "education"] | order(endDate desc, startDate desc){    institution,    degree,    fieldOfStudy,    startDate,    endDate,    current,    cgpa,    educationType,    description,    achievements,    instituteLogo,    website,    order,    }
+export type EDUCATION_QUERYResult = Array<{
+  institution: string | null;
+  degree: string | null;
+  fieldOfStudy: string | null;
+  startDate: string | null;
+  endDate: string | null;
+  current: boolean | null;
+  cgpa: string | null;
+  educationType: "regular" | "remote" | null;
+  description: string | null;
+  achievements: Array<string> | null;
+  instituteLogo: string | null;
+  website: string | null;
+  order: number | null;
+}>;
+
 // Source: ./components/sections/ExperienceSection.tsx
 // Variable: EXPERIENCE_QUERY
 // Query: *[_type == "experience"] | order(startDate desc){    company,    position,    employmentType,    location,    startDate,    endDate,    current,    description,    responsibilities,    achievements,    technologies[]->{name, category},    companyLogo,    }
@@ -573,6 +578,35 @@ export type HERO_QUERYResult = {
   } | null;
 } | null;
 
+// Source: ./components/sections/ProjectSection.tsx
+// Variable: PROJECTS_QUERY
+// Query: *[_type == "project" && featured == true] | order(order asc)[0...6]{    title,    slug,    tagline,    category,    liveUrl,    githubUrl,    coverImage,    technologies[]->{name, category},    }
+export type PROJECTS_QUERYResult = Array<{
+  title: string | null;
+  slug: Slug | null;
+  tagline: string | null;
+  category: "ai-ml" | "api-backend" | "browser-extension" | "cli-tool" | "desktop-app" | "devops" | "game" | "mobile-app" | "open-source" | "other" | "web-app" | null;
+  liveUrl: string | null;
+  githubUrl: string | null;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  technologies: Array<{
+    name: string | null;
+    category: "backend" | "cloud" | "database" | "design" | "framework" | "frontend" | "other" | "programming-language" | "soft-skills" | "testing" | "tools" | null;
+  }> | null;
+}>;
+
 // Source: ./components/sections/SkillsSection.tsx
 // Variable: SKILLS_QUERY
 // Query: *[_type == "skill"] | order(category asc, order asc){    name,    category,    icon,    }
@@ -587,8 +621,10 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_id == \"singleton-profile\"][0]{\n    firstName,\n    lastName,\n    fullBio,\n    yearsOfExperience,\n    stats,\n    email,\n    phone,\n    location,\n        }": ABOUT_QUERYResult;
+    "*[_type == \"education\"] | order(endDate desc, startDate desc){\n    institution,\n    degree,\n    fieldOfStudy,\n    startDate,\n    endDate,\n    current,\n    cgpa,\n    educationType,\n    description,\n    achievements,\n    instituteLogo,\n    website,\n    order,\n    }": EDUCATION_QUERYResult;
     "*[_type == \"experience\"] | order(startDate desc){\n    company,\n    position,\n    employmentType,\n    location,\n    startDate,\n    endDate,\n    current,\n    description,\n    responsibilities,\n    achievements,\n    technologies[]->{name, category},\n    companyLogo,\n    }": EXPERIENCE_QUERYResult;
     "*[_id == \"singleton-profile\"][0]{\n  firstName,\n  lastName,\n  headline,\n  headlineStaticText,\n  headlineAnimatedWords,\n  headlineAnimatedDuration,\n  shortBio,\n  email,\n  isOnline,\n  phone,\n  location,\n  availability,\n  socialLinks,\n  yearsOfExperience,\n  profileImage\n    }": HERO_QUERYResult;
+    "*[_type == \"project\" && featured == true] | order(order asc)[0...6]{\n    title,\n    slug,\n    tagline,\n    category,\n    liveUrl,\n    githubUrl,\n    coverImage,\n    technologies[]->{name, category},\n    }": PROJECTS_QUERYResult;
     "*[_type == \"skill\"] | order(category asc, order asc){\n    name,\n    category,\n    icon,\n    }": SKILLS_QUERYResult;
   }
 }

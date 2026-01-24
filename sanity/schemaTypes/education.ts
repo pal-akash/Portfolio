@@ -63,12 +63,7 @@ export default defineType({
     defineField({
       name: "description",
       title: "Description",
-      type: "array",
-      of: [
-        {
-          type: "block",
-        },
-      ],
+      type: "string",
       description: "Description of course works",
     }),
     defineField({
@@ -76,11 +71,35 @@ export default defineType({
       title: "Institute Logo",
       type: "url",
     }),
+    defineField({
+      name: "website",
+      title: "Website",
+      type: "string",
+    }),
+    defineField({
+      name: "order",
+      title: "Display Order",
+      type: "number",
+      description: "Lower numbers appear first (0-99)",
+      initialValue: 0,
+      validation: (Rule) => Rule.min(0).max(99),
+    }),
+    defineField({
+      name: "achievements",
+      title: "Key Achievements",
+      type: "array",
+      of: [
+        {
+          type: "string",
+        },
+      ],
+      description: "Quantifiable accomplishments",
+    }),
   ],
   preview: {
     select: {
-      title: "company",
-      subtitle: "position",
+      title: "institution",
+      subtitle: "degree",
     },
     prepare(selection) {
       const { title, subtitle } = selection;
