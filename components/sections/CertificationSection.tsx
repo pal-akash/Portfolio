@@ -1,5 +1,8 @@
-import { sanityFetch } from '@/sanity/lib/live';
 import { defineQuery } from 'next-sanity';
+import { sanityFetch } from '@/sanity/lib/live';
+import { CometCard } from '../ui/comet-card';
+import Image from 'next/image';
+import { urlFor } from '@/sanity/lib/image';
 
 const CERTIFICATION_QUERY =
   defineQuery(`*[_type == "certification"] | order(issueDate desc){
@@ -34,7 +37,161 @@ async function CertificationSection() {
     return new Date(expiryDate) < new Date();
   };
 
-  return <div>CertificationSection</div>;
+  return (
+    <section
+      id="certifications"
+      className="py-20 px-6 bg-linear-to-b from-background via-muted/20-to-background"
+    >
+      <div className="container mx-auto max-w-6xl">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            Certifications
+          </h2>
+          <p className="text-xl text-muted-foreground">
+            Professional credentials and certifications
+          </p>
+        </div>
+
+        <div className="@container">
+          <div className="grid grid-cols-1 @2xl:grid-cols-2 gap-10">
+            {certifications.map((cert) => (
+              <CometCard
+                key={`${cert.issuer}-${cert.name}-${cert.issueDate}`}
+                rotateDepth={8}
+                translateDepth={10}
+                className="w-full"
+              >
+                {/* Outer Frame - Light Matting */}
+                <div
+                  className="relative bg-card border-8 border-card/80 rounded-sm shadow-2xl p-4"
+                  style={{
+                    transformStyle: 'preserve-3d',
+                  }}
+                >
+                  {/* Inner Certificate - Dark Background */}
+                  <div className="relative bg-linear-to-br from-zinc-900 via-zinc-900 to-zinc-950 dark:from-zinc-950 dark:via-black dark:to-zinc-950 border-2 border-yellow-600/40 p-8 flex flex-col min-h-112.5">
+                    {/* Decorative Corner Frames - Top Left */}
+                    <div className="absolute top-0 left-0 w-20 h-20">
+                      <div className="absolute top-3 left-3 w-10 h-10 border-t-2 border-l-2 border-yellow-600/60" />
+                      <div className="absolute top-5 left-5 w-6 h-6 border-t-2 border-l-2 border-yellow-600/60" />
+                    </div>
+
+                    {/* Decorative Corner Frames - Top Right */}
+                    <div className="absolute top-0 right-0 w-20 h-20">
+                      <div className="absolute top-3 right-3 w-10 h-10 border-t-2 border-r-2 border-yellow-600/60" />
+                      <div className="absolute top-5 right-5 w-6 h-6 border-t-2 border-r-2 border-yellow-600/60" />
+                    </div>
+
+                    {/* Decorative Corner Frames - Bottom Left */}
+                    <div className="absolute border-0 left-0 w-20 h-20">
+                      <div className="absolute bottom-3 left-3 w-10 h-10 border-b-2 border-l-2 border-yellow-600/60" />
+                      <div className="absolute bottom-5 left-5 w-6 h-6 border-b-2 border-l-2 border-yellow-600/60" />
+                    </div>
+
+                    {/* Decorative Corner Frames - Bottom Right */}
+                    <div className="absolute border-0 right-0 w-20 h-20">
+                      <div className="absolute bottom-3 right-3 w-10 h-10 border-b-2 border-r-2 border-yellow-600/60" />
+                      <div className="absolute bottom-5 right-5 w-6 h-6 border-b-2 border-r-2 border-yellow-600/60" />
+                    </div>
+
+                    {/* Diamond Accents - Corners */}
+                    <div className="absolute top-2 left-2 w-3 h-3 rotate-45 bg-yellow-600/70" />
+                    <div className="absolute top-2 right-2 w-3 h-3 rotate-45 bg-yellow-600/70" />
+                    <div className="absolute bottom-2 left-2 w-3 h-3 rotate-45 bg-yellow-600/70" />
+                    <div className="absolute bottom-2 right-2 w-3 h-3 rotate-45 bg-yellow-600/70" />
+
+                    <div className="relative z-10 flex flex-col items-center text-center flex-1">
+                      {/* Date at top */}
+                      <div className="mb-4">
+                        <p className="text-xs text-zinc-400">
+                          {cert.issueDate && formatDate(cert.issueDate)}
+                        </p>
+                      </div>
+
+                      {/* Certificate Title - Small and Gold at top */}
+                      <div className="mb-5">
+                        <h4 className="text-lg font-bold text-yellow-600/80 mb-1 uppercase tracking-wide">
+                          CERTIFICATE
+                        </h4>
+                        <p className="text-xs text-yellow-600/80 italic">for</p>
+                      </div>
+
+                      {/* Certificate Name - Main Subject */}
+                      <h3 className="text-3xl font-bold text-white mb-6 leading-tight px-4">
+                        {cert.name}
+                      </h3>
+
+                      {/* Description */}
+                      {cert.description && (
+                        <p className="text-sm text-zinc-300/80 mb-5 line-clamp-3 px-8 leading-relaxed">
+                          {cert.description}
+                        </p>
+                      )}
+
+                      {/* Logo Badge */}
+                      {cert.logo && (
+                        <div className="relative mb-5 flex items-center justify-center">
+                          <div className="relative w-16 h-16 p-2 bg-white/10 rounded-full border border-yellow-600/30">
+                            <div className="relative w-full h-full">
+                              <Image
+                                src={urlFor(cert.logo)
+                                  .width(64)
+                                  .height(64)
+                                  .url()}
+                                alt={`${cert.name} logo`}
+                                fill
+                                className="object-cover"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Issuer Name */}
+                      <h3 className="text-xl font-semibold text-white mb-6 leading-tight px-4">
+                        {cert.issuer}
+                      </h3>
+
+                      {/* Expiry */}
+                      {cert.expiryDate && (
+                        <div className="mt-auto">
+                          <p
+                            className={`text-sm ${
+                              isExpired(cert.expiryDate)
+                                ? 'text-red-500 font-semibold'
+                                : 'text-zinc-400'
+                            }`}
+                          >
+                            Valid Until {formatDate(cert.expiryDate)}
+                          </p>
+                        </div>
+                      )}
+
+                      {cert.credentialId && (
+                        <div className="mt-auto">
+                          <p className="text-xs text-zinc-500">
+                            Credential ID: {cert.credentialId}
+                          </p>
+                        </div>
+                      )}
+
+                      {cert.credentialUrl && (
+                        <div className="mt-auto">
+                          <p className="text-xs text-zinc-500">
+                            Credential URL: {cert.credentialUrl}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </CometCard>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default CertificationSection;
