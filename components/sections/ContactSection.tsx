@@ -4,6 +4,8 @@ import { MailIcon, MapPinIcon, Phone } from 'lucide-react';
 import Link from 'next/link';
 import ContactForm from '../ContactForm';
 import { WorldMapDemo } from '../WorldMapDemo';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
+import { GithubIcon, LinkedinIcon } from '@sanity/icons';
 
 const PROFILE_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
     email,
@@ -19,7 +21,7 @@ async function ContactSection() {
     return null;
   }
   return (
-    <section id="contact" className="py-20 px-6 pb-40 bg-muted/30">
+    <section id="contact" className="py-20 px-6 pb-40 bg-muted/10">
       <WorldMapDemo />
 
       <div className="container mx-auto max-w-4xl">
@@ -112,7 +114,14 @@ async function ContactSection() {
                         rel="noopener noreferrer"
                         className="px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
                       >
-                        GitHub
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <GithubIcon fontSize={40} />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>GitHub</p>
+                          </TooltipContent>
+                        </Tooltip>
                       </Link>
                     )}
                     {profile.socialLinks.linkedin && (
@@ -122,7 +131,14 @@ async function ContactSection() {
                         rel="noopener noreferrer"
                         className="px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
                       >
-                        LinkedIn
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <LinkedinIcon fontSize={40} />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>LinkedIn</p>
+                          </TooltipContent>
+                        </Tooltip>
                       </Link>
                     )}
                   </div>
