@@ -13,6 +13,18 @@
  */
 
 // Source: schema.json
+export type Navigation = {
+  _id: string;
+  _type: "navigation";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  href?: string;
+  icon?: string;
+  isExternal?: boolean;
+};
+
 export type SiteSetting = {
   _id: string;
   _type: "siteSetting";
@@ -384,8 +396,18 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = SiteSetting | SanityImageCrop | SanityImageHotspot | Certification | Education | Experience | Skill | Project | Slug | Profile | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = Navigation | SiteSetting | SanityImageCrop | SanityImageHotspot | Certification | Education | Experience | Skill | Project | Slug | Profile | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./components/FloatingDock.tsx
+// Variable: NAVIGATION_QUERY
+// Query: *[_type == "navigation"] | order(order asc){    title,    href,    icon,    isExternal    }
+export type NAVIGATION_QUERYResult = Array<{
+  title: string | null;
+  href: string | null;
+  icon: string | null;
+  isExternal: boolean | null;
+}>;
+
 // Source: ./components/sections/AboutSection.tsx
 // Variable: ABOUT_QUERY
 // Query: *[_id == "singleton-profile"][0]{    firstName,    lastName,    fullBio,    yearsOfExperience,    stats,    email,    phone,    location,        }
@@ -643,6 +665,7 @@ export type SKILLS_QUERYResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "*[_type == \"navigation\"] | order(order asc){\n    title,\n    href,\n    icon,\n    isExternal\n    }": NAVIGATION_QUERYResult;
     "*[_id == \"singleton-profile\"][0]{\n    firstName,\n    lastName,\n    fullBio,\n    yearsOfExperience,\n    stats,\n    email,\n    phone,\n    location,\n        }": ABOUT_QUERYResult;
     "*[_type == \"certification\"] | order(issueDate desc){\n    name,\n    issuer,\n    issueDate,\n    expiryDate,\n    credentialId,\n    credentialUrl,\n    logo,\n    description,\n    }": CERTIFICATION_QUERYResult;
     "*[_id == \"singleton-profile\"][0]{\n    email,\n    phone,\n    location,\n    socialLinks\n    }": PROFILE_QUERYResult;

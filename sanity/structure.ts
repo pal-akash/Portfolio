@@ -118,11 +118,11 @@ export const structure: StructureResolver = (S) =>
       //   )
       S.divider(),
       // Navigation
-      // S.listItem()
-      //   .title("Navigation Links")
-      //   .icon(DocumentsIcon)
-      //   .schemaType("navigation")
-      //   .child(S.documentTypeList("navigation").title("Navigation Links")),
+      S.listItem()
+        .title("Navigation Links")
+        .icon(DocumentsIcon)
+        .schemaType("navigation")
+        .child(S.documentTypeList("navigation").title("Navigation Links")),
 
       S.divider(),
       // Site Settings (Singleton)

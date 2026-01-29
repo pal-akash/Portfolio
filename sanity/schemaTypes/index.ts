@@ -6,6 +6,7 @@ import profile from "./profile";
 import project from "./project";
 import siteSetting from "./siteSetting";
 import skill from "./skill";
+import navigation from "./navigation";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -21,6 +22,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     // service,
     // contact,
     siteSetting,
-    // navigation,
+    navigation,
   ],
 };
