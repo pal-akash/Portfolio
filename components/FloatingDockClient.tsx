@@ -200,7 +200,9 @@ function DockIcon({
     return (
       <div
         className={`absolute px-3 py-1.5 ${isHorizontal ? 'rounded-xl' : 'rounded-lg'} bg-white/90 dark:bg-black/90 backdrop-blur-xl border border-white/40 dark:border-white/20 ${isHorizontal ? 'text-xs md:text-sm' : 'text-sm'} font-medium text-neutral-800 darl:text-neutral-200 whitespace-nowrap opacity-0 scale-90`}
-      ></div>
+      >
+        {item.title}
+      </div>
     );
   };
 
